@@ -10,13 +10,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130923122040) do
+ActiveRecord::Schema.define(:version => 20130923122548) do
 
   create_table "items", :force => true do |t|
     t.integer  "code"
     t.string   "name"
     t.string   "page"
     t.string   "image"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "scraper_results", :force => true do |t|
+    t.integer  "scraper_run"
+    t.integer  "item_id"
+    t.decimal  "was_price"
+    t.decimal  "now_price"
+    t.string   "availability"
+    t.string   "availability_text"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "scraper_runs", :force => true do |t|
+    t.text     "html"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
