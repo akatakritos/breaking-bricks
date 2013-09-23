@@ -26,14 +26,14 @@ class Scraper
         availability_tag = get_availability_tag result
 
         results.push({ 
-          :item_name => title_tag.text.strip,
-          :item_code => product_code_tag.text.strip.to_i,
-          :item_link => title_tag.attr('href'),
-          :item_image => img_tag.attr('src'),
-          :item_was_price => was_price_tag ? was_price_tag.text.match(/\d+\.\d+/) : nil,
-          :item_now_price => now_price_tag.text.match(/\d+\.\d+/).to_s.to_d,
-          :item_availability => availability_tag.attr('class'),
-          :item_availability_text => availability_tag.text.strip
+          :name => title_tag.text.strip,
+          :code => product_code_tag.text.strip.to_i,
+          :link => title_tag.attr('href'),
+          :image => img_tag.attr('src'),
+          :was_price => was_price_tag ? was_price_tag.text.match(/\d+\.\d+/).to_s.to_d : nil,
+          :now_price => now_price_tag.text.match(/\d+\.\d+/).to_s.to_d,
+          :availability => availability_tag.attr('class'),
+          :availability_text => availability_tag.text.strip
         })
       end
     end
@@ -41,13 +41,6 @@ class Scraper
     results
   end
 
-  def access_retiring_products_page
-    agent = Mechanize.new
-    page = agent.get('http://shop.lego.com/en-US/catalog/productListing.jsp')
-    form = page.form_with(:name => 'facetedNav')
-    form.checkbox_with(:id => 'backAgainFlag').check
-    agent.submit form
-  end
 
   private
     def get_availability_tag (result)
@@ -55,5 +48,13 @@ class Scraper
           result.search('div.availability-future').first,
           result.search('div.availability-questionable').first]
        possible_tags.detect { |tag| ! tag.nil? }
+    end
+
+    def access_retiring_products_page
+      agent = Mechanize.new
+      page = agent.get('http://shop.lego.com/en-US/catalog/productListing.jsp')
+      form = page.form_with(:name => 'facetedNav')
+      form.checkbox_with(:id => 'backAgainFlag').check
+      agent.submit form
     end
 end
