@@ -1,8 +1,10 @@
 require 'open-uri'
 class Scraper
 
+  attr_reader :html
   def initialize(page)
     @page = page
+    @html = page.to_s
   end
   
   def get_retiring_products
