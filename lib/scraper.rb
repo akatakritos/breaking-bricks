@@ -1,19 +1,14 @@
 require 'open-uri'
 class Scraper
-  attr_accessor :url
 
-  def initialize(options={})
-    options.each do |key, value|
-      self.send("#{key}=", value)
-    end
-
+  def initialize(page)
+    @page = page
   end
   
   def get_retiring_products
-    page = access_retiring_products_page
     results = []
 
-    page.search('#product-results li').each do |result|
+    @page.search('#product-results li').each do |result|
 
       title_tag = result.search('h4 a').first
 
@@ -23,7 +18,7 @@ class Scraper
         img_tag = result.search('a img').first
         was_price_tag = result.search('li.was-price em').first
         now_price_tag = result.search('li em').first
-        availability_tag = get_availability_tag result
+        availability = get_availability(result)
 
         results.push({ 
           :name => title_tag.text.strip,
@@ -32,8 +27,8 @@ class Scraper
           :image => img_tag.attr('src'),
           :was_price => was_price_tag ? was_price_tag.text.match(/\d+\.\d+/).to_s.to_d : nil,
           :now_price => now_price_tag.text.match(/\d+\.\d+/).to_s.to_d,
-          :availability => availability_tag.attr('class'),
-          :availability_text => availability_tag.text.strip
+          :availability => availability[:availability],
+          :availability_text => availability[:availability_text]
         })
       end
     end
@@ -50,11 +45,19 @@ class Scraper
        possible_tags.detect { |tag| ! tag.nil? }
     end
 
-    def access_retiring_products_page
-      agent = Mechanize.new
-      page = agent.get('http://shop.lego.com/en-US/catalog/productListing.jsp')
-      form = page.form_with(:name => 'facetedNav')
-      form.checkbox_with(:id => 'backAgainFlag').check
-      agent.submit form
+    def get_availability (result)
+      tag = get_availability_tag(result)
+      text = tag.text.strip
+
+      sym = case text
+            when 'Available Now' then :available_now
+            when 'Temporarily out of stock' then :out_of_stock
+            when 'Call to check product availability' then :call_to_check
+            when 'Sold Out' then :sold_out
+            else :unknown
+      end
+
+      { :availability => sym, :text => text }
     end
+
 end
