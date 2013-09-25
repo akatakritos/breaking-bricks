@@ -1,7 +1,7 @@
 class ScraperResult < ActiveRecord::Base
   attr_accessible :availability, :availability_text, :item_id, :now_price, :scraper_run, :was_price
   belongs_to :scraper_run
-  has_one :item
+  belongs_to :item
 
   def self.from_result_hash(hash)
     result = self.new

@@ -27,6 +27,7 @@ gem 'jquery-rails'
 
 group :test do
   gem 'rspec-rails'
+  gem 'factory_girl'
 end
 
 # To use ActiveModel has_secure_password

@@ -14,17 +14,12 @@ describe Item do
       end
 
       it 'should create a new one with the right hash' do
-        code = 1
-        name = 'Test'
-        page = '/url/'
-        image = 'image.jpg'
-
-        item = Item.find_or_create_from_hash({:code => code, :name => name, 
-                                             :page => page, :image=> image})
-        item.name.should == name
-        item.code.should == code
-        item.page.should == page
-        item.image.should == image
+        hash = create_scraper_hash
+        item = Item.find_or_create_from_hash(hash)
+        item.name.should  == hash[:name]
+        item.code.should  == hash[:code]
+        item.page.should  == hash[:page]
+        item.image.should == hash[:image]
       end
     end
 
@@ -37,18 +32,14 @@ describe Item do
       end
 
       it 'should update the attribtues' do
-        code = 1
-        name = 'Test'
-        page = 'url'
-        image = 'img.jpg'
 
-        item = Item.find_or_create_from_hash( :code => code, :name => name,
-                                             :page => page, :image => image )
+        hash = create_scraper_hash
+        item = Item.find_or_create_from_hash(hash)
 
-        item.name.should == name
-        item.page.should == page
-        item.code.should == code
-        item.image.should == image
+        item.name.should  == hash[:name]
+        item.page.should  == hash[:page]
+        item.code.should  == hash[:code]
+        item.image.should == hash[:image]
       end
     end
   end

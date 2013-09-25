@@ -11,10 +11,7 @@ describe ScraperResult do
 
   describe 'from_result_hash' do
     it 'copies attribtues' do
-      hash = { :code => 1, :name => 'item', :page => 'item.html',
-               :image => 'item.jpg', :availability => :available,
-               :availability_text => "available now", :was_price => 9.99,
-               :now_price => 7.99 }
+      hash = create_scraper_hash
       result = ScraperResult.from_result_hash(hash)
       result.item.code.should == hash[:code]
       result.item.name.should == hash[:name]
