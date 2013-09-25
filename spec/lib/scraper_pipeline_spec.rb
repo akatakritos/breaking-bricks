@@ -8,8 +8,5 @@ describe ScraperPipeline do
       scraper.stub(:get_retiring_products => { } )
     end
 
-    it 'saves a new item' do
-      ScraperPipeline.new(scraper).process
-    end
   end
 end

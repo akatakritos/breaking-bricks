@@ -39,16 +39,16 @@ describe Scraper do
 
     describe 'a sale price block' do
       it 'should have a now_price and a was_price' do
-        prod = @products.find { |p| p[:code] == 9679 }
-        prod[:now_price].should == 7.98
-        prod[:was_price].should == 9.99
+        prod = @products.find { |p| p[:code] == 8065 }
+        prod[:now_price].should == 8.98
+        prod[:was_price].should == 10.99
       end
     end
 
     describe 'an out of stock item' do
       it 'should have an availability and an availability text' do
         prod = @products.find { |p| p[:code] == 9476 }
-        prod[:availability].should == :out_of_stock
+        prod[:availability].should == 'out_of_stock'
         prod[:availability_text].should == "Temporarily out of stock"
       end
     end
@@ -56,7 +56,7 @@ describe Scraper do
     describe 'call to check stock item' do
       it 'should have an availability of :call_to_check and a text' do
         prod = @products.find { |p| p[:code] == 9678 }
-        prod[:availability].should == :call_to_check
+        prod[:availability].should == 'call_to_check'
         prod[:availability_text].should == 'Call to check product availability'
       end
     end
@@ -64,7 +64,7 @@ describe Scraper do
     describe 'a sold out product' do
       it 'should have availability :sold_out and a text' do
         prod = @products.find { |p| p[:code] == 3183 }
-        prod[:availability].should == :sold_out
+        prod[:availability].should == 'sold_out'
         prod[:availability_text].should == "Sold Out"
       end
     end

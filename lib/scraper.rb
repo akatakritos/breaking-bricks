@@ -19,7 +19,14 @@ class Scraper
         product_code_tag = result.search('span.item-code').first
         img_tag = result.search('a img').first
         was_price_tag = result.search('li.was-price em').first
-        now_price_tag = result.search('li em').first
+
+        price_tags = result.search('li em')
+        if was_price_tag
+          now_price_tag = price_tags[1]
+        else
+          now_price_tag = price_tags[0]
+        end
+
         availability = get_availability(result)
 
         results.push({ 
@@ -30,7 +37,7 @@ class Scraper
           :was_price => was_price_tag ? was_price_tag.text.match(/\d+\.\d+/).to_s.to_d : nil,
           :now_price => now_price_tag.text.match(/\d+\.\d+/).to_s.to_d,
           :availability => availability[:availability],
-          :availability_text => availability[:availability_text]
+          :availability_text => availability[:text]
         })
       end
     end
@@ -52,11 +59,11 @@ class Scraper
       text = tag.text.strip
 
       sym = case text
-            when 'Available Now' then :available_now
-            when 'Temporarily out of stock' then :out_of_stock
-            when 'Call to check product availability' then :call_to_check
-            when 'Sold Out' then :sold_out
-            else :unknown
+            when 'Available Now' then 'available_now'
+            when 'Temporarily out of stock' then 'out_of_stock'
+            when 'Call to check product availability' then 'call_to_check'
+            when 'Sold Out' then 'sold_out'
+            else 'unknown'
       end
 
       { :availability => sym, :text => text }
