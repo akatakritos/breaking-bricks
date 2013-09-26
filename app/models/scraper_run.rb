@@ -13,4 +13,12 @@ class ScraperRun < ActiveRecord::Base
     run.save
     run
   end
+
+  def has_item?(item)
+    self.scraper_results.all.each do |old_result|
+      return true if old_result.item == item
+    end
+    
+    false
+  end
 end
