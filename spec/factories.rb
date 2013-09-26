@@ -7,6 +7,14 @@ module Factories
     hash.merge(overrides);
   end
 
+  def create_run_copy(last_run)
+    run = FactoryGirl.create(:scraper_run)
+    (0...last_run.scraper_results.length).each do |i|
+      run.scraper_results[i].item = last_run.scraper_results[i].item
+    end
+
+    run
+  end
 end
 
 FactoryGirl.define do

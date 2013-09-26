@@ -21,4 +21,8 @@ class ScraperRun < ActiveRecord::Base
     
     false
   end
+
+  def get_result_by_item(item)
+    self.scraper_results.all.find { |r| r.item == item }
+  end
 end
