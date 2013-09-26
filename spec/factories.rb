@@ -11,6 +11,10 @@ module Factories
     run = FactoryGirl.create(:scraper_run)
     (0...last_run.scraper_results.length).each do |i|
       run.scraper_results[i].item = last_run.scraper_results[i].item
+      run.scraper_results[i].was_price = last_run.scraper_results[i].was_price
+      run.scraper_results[i].now_price = last_run.scraper_results[i].now_price
+      run.scraper_results[i].availability = last_run.scraper_results[i].availability
+      run.scraper_results[i].availability_text = last_run.scraper_results[i].availability_text
     end
 
     run

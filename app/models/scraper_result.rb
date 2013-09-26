@@ -12,4 +12,9 @@ class ScraperResult < ActiveRecord::Base
     result.was_price = hash[:was_price]
     result
   end
+
+  def availability_changed_from(previous)
+    self.availability != previous.availability || self.availability_text != previous.availability_text
+  end
+
 end
