@@ -163,4 +163,40 @@ describe RunComparer do
       end
     end
   end
+
+  describe '#retired' do
+    before do
+      @last = FactoryGirl.create(:scraper_run)
+    end
+    describe 'when nothing changes' do
+      before do
+        @current = create_run_copy(@last)
+        @comparer = RunComparer.new(@last, @current)
+      end
+
+      it 'should not yield anything' do
+        expect { |b| @comparer.retired &b }.to_not yield_control.once
+      end
+    end
+
+    describe 'when a product drops off the list' do
+      before do
+        @current = create_run_copy(@last)
+        @removed_item = @current.scraper_results.last
+        @removed_item.destroy
+        @current.scraper_results.reload
+        @comparer = RunComparer.new(@last, @current)
+      end
+
+      it 'should yield once' do
+        expect { |b| @comparer.retired &b }.to yield_control.once
+      end
+
+      it 'yields the item from the previous run' do
+        @comparer.retired do |l|
+          l.item.should == @removed_item.item
+        end
+      end
+    end
+  end
 end

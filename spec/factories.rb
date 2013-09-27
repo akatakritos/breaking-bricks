@@ -15,6 +15,7 @@ module Factories
       run.scraper_results[i].now_price = last_run.scraper_results[i].now_price
       run.scraper_results[i].availability = last_run.scraper_results[i].availability
       run.scraper_results[i].availability_text = last_run.scraper_results[i].availability_text
+      run.scraper_results[i].save!
     end
 
     run
