@@ -5,8 +5,11 @@ require 'oauth'
 namespace :twitter do
   desc "Gets the OAUTH Token and secret for configuring the twitter client"
   task :oauth => :environment do
-    consumer_key = "hll2YzL9xDK4M0h93yBrA"
-    consumer_secret = "9CQ3fgbhEUgZndvMtj0ZEW7TrzRb2kfc5Ea4znzuNc"
+
+    # http://blog.andrewcantino.com/blog/2011/05/12/how-to-make-your-rails-app-tweet-the-twitter/
+    twitter_config = YAML.load(File.read(Rails.root.join("config", "twitter.yml")))
+    consumer_key = twitter_config['consumer_key']
+    consumer_secret = twitter_config['consumer_key_secret']
 
     oauth_consumer = OAuth::Consumer.new(consumer_key, consumer_secret,
                                          :site => 'http://api.twitter.com',
@@ -21,7 +24,6 @@ namespace :twitter do
 
     print "What was the PIN twitter provided you with? "
     pin = STDIN.gets.chomp
-    puts pin
 
       OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
       access_token = request_token.get_access_token(:oauth_verifier => pin)

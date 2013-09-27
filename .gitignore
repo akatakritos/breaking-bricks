@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# ignore twitter.yml so its not in source control
+config/twitter.yml
