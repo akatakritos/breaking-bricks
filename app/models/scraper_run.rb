@@ -22,6 +22,10 @@ class ScraperRun < ActiveRecord::Base
     false
   end
 
+  def previous
+    ScraperRun.where("id < ?", id).order('id DESC').first
+  end
+
   def get_result_by_item(item)
     self.scraper_results.all.find { |r| r.item == item }
   end

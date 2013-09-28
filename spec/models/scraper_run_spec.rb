@@ -16,5 +16,13 @@ describe ScraperRun do
       end
     end
   end
+
+  describe '#previous' do
+    it 'returns the previous run' do
+      prev = FactoryGirl.create(:scraper_run)
+      curr = FactoryGirl.create(:scraper_run)
+      curr.previous.should == prev
+    end
+  end
 end
 
