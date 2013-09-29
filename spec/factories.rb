@@ -1,7 +1,7 @@
 module Factories
   def create_scraper_hash(overrides = {})
     hash = { :code => 1, :name => 'item', :page => 'http://example.com/item.html',
-             :image => 'item.jpg', :availability => :available,
+             :image => 'item.jpg', :availability => "available_now",
              :availability_text => "available now", :was_price => 9.99,
              :now_price => 7.99 }
     hash.merge(overrides);
@@ -31,7 +31,7 @@ FactoryGirl.define do
   end
 
   factory :scraper_result do
-    availability "available"
+    availability "available_now"
     availability_text "Now Available"
     now_price 9.99
 
