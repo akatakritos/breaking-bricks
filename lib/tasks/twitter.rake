@@ -40,4 +40,12 @@ namespace :twitter do
       Twitter::Client.new.verify_credentials
       
   end
+
+  desc 'Test the settings'
+  task :verify => :environment do
+    Tweeter.new
+    Twitter::Client.new.verify_credentials
+    p "Connection Successful!"
+  end
+
 end
