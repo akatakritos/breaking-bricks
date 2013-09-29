@@ -9,7 +9,7 @@ namespace :twitter do
     # http://blog.andrewcantino.com/blog/2011/05/12/how-to-make-your-rails-app-tweet-the-twitter/
     twitter_config = YAML.load(File.read(Rails.root.join("config", "twitter.yml")))
     consumer_key = twitter_config['consumer_key']
-    consumer_secret = twitter_config['consumer_key_secret']
+    consumer_secret = twitter_config['consumer_secret']
 
     oauth_consumer = OAuth::Consumer.new(consumer_key, consumer_secret,
                                          :site => 'http://api.twitter.com',
