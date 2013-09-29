@@ -1,6 +1,5 @@
 class ScraperPipeline
 
-  attr_reader :filters
   def initialize(scraper)
     @scraper = scraper
     @filters = FilterList.new 
