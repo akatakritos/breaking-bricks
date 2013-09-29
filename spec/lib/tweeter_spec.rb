@@ -36,21 +36,21 @@ describe Tweeter do
 
     it 'calls to_s on the tweet object' do
       tweet.should_receive(:to_s).and_return("")
-      tweeter.send(tweet)
+      tweeter.send_tweet(tweet)
     end
 
     it 'calls update on Twitter' do
       tweet.stub(:to_s).and_return("hello")
       Twitter.should_receive(:update).with("hello")
 
-      tweeter.send(tweet)
+      tweeter.send_tweet(tweet)
     end
 
     it 'truncates long tweets' do
       tweet.stub(:to_s).and_return("A"*200)
       Twitter.should_receive(:update).with("A"*157 + "...")
 
-      tweeter.send(tweet)
+      tweeter.send_tweet(tweet)
     end
   end
 end

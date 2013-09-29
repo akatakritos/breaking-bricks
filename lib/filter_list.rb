@@ -23,6 +23,6 @@ class FilterListElement
   end
 
   def do_filter(last, current)
-    @filter.filter(last, current, @block)
+    @filter.filter(last, current, &@block)
   end
 end

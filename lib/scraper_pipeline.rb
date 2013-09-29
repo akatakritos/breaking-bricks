@@ -11,7 +11,7 @@ class ScraperPipeline
     current.save
 
     previous = current.previous
-    @filters.filter_all(previous, current)
+    @filters.filter_all(previous, current) if previous
   end
 
   def add_filter(filter, &block)

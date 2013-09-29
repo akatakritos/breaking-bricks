@@ -8,8 +8,8 @@ describe FilterList do
     it 'calls filter on each filter' do
       f1 = double()
       f2 = double()
-      b1 = double()
-      b2 = double()
+      b1 = Proc.new { }
+      b2 = Proc.new { }
       last = double()
       current = double()
       
@@ -17,8 +17,8 @@ describe FilterList do
       list.add(f1, b1)
       list.add(f2, b2)
 
-      f1.should_receive(:filter).with(last, current, b1)
-      f2.should_receive(:filter).with(last, current, b2)
+      f1.should_receive(:filter).with(last, current, &b1)
+      f2.should_receive(:filter).with(last, current, &b2)
 
       list.filter_all(last, current)
     end
@@ -37,7 +37,8 @@ describe FilterList do
       it 'should call filter on the filter' do
         last = double()
         current = double()
-        filter.should_receive(:filter).with(last, current, block)
+        block = Proc.new { }
+        filter.should_receive(:filter).with(last, current, &block)
 
         f = FilterListElement.new(filter, block)
         f.do_filter(last, current)

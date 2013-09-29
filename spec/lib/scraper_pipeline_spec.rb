@@ -23,8 +23,8 @@ describe ScraperPipeline do
         pipeline.add_filter filter1, &block1
         pipeline.add_filter filter2, &block2
 
-        filter1.should_receive(:filter).with(run1, run2, block1)
-        filter2.should_receive(:filter).with(run1, run2, block2)
+        filter1.should_receive(:filter).with(run1, run2, &block1)
+        filter2.should_receive(:filter).with(run1, run2, &block2)
 
         pipeline.process
     end
