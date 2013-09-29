@@ -11,15 +11,15 @@ describe ResultFilters::NewlyRetiring do
         @current = create_run_copy(@last)
         @new_result = FactoryGirl.create(:scraper_result)
         @current.scraper_results << @new_result
-        @filter = ResultFilters::NewlyRetiring.new(@last, @current)
+        @filter = ResultFilters::NewlyRetiring.new
       end
 
       it 'should yield once' do
-        expect { |b| @filter.filter &b }.to yield_control.once
+        expect { |b| @filter.filter @last, @current, &b }.to yield_control.once
       end
 
       it 'should yield the new result' do
-        @filter.filter do |result|
+        @filter.filter @last, @current do |result|
           result.should == @new_result
         end
       end
@@ -29,11 +29,11 @@ describe ResultFilters::NewlyRetiring do
       before do
         @current = create_run_copy(@last)
 
-        @filter = ResultFilters::NewlyRetiring.new(@last, @current)
+        @filter = ResultFilters::NewlyRetiring.new
       end
 
       it 'should not yeld' do
-        expect { |b| @filter.filter &b }.to_not yield_control
+        expect { |b| @filter.filter @last, @current, &b }.to_not yield_control
       end
     end
   end

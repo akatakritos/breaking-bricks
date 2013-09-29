@@ -8,11 +8,11 @@ describe ResultFilters::Retired do
     describe 'when nothing changes' do
       before do
         @current = create_run_copy(@last)
-        @filter = ResultFilters::Retired.new(@last, @current)
+        @filter = ResultFilters::Retired.new
       end
 
       it 'should not yield anything' do
-        expect { |b| @filter.filter &b }.to_not yield_control.once
+        expect { |b| @filter.filter @last, @current, &b }.to_not yield_control.once
       end
     end
 
@@ -22,15 +22,15 @@ describe ResultFilters::Retired do
         @removed_item = @current.scraper_results.last
         @removed_item.destroy
         @current.scraper_results.reload
-        @filter = ResultFilters::Retired.new(@last, @current)
+        @filter = ResultFilters::Retired.new
       end
 
       it 'should yield once' do
-        expect { |b| @filter.filter &b }.to yield_control.once
+        expect { |b| @filter.filter @last, @current, &b }.to yield_control.once
       end
 
       it 'yields the item from the previous run' do
-        @filter.filter do |l|
+        @filter.filter @last, @current do |l|
           l.item.should == @removed_item.item
         end
       end

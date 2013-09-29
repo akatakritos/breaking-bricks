@@ -12,15 +12,15 @@ describe ResultFilters::PriceChange do
         @changed_item = @current.scraper_results.last
         @changed_item.was_price = @changed_item.now_price
         @changed_item.now_price = @changed_item.now_price - 1.00
-        @filter = ResultFilters::PriceChange.new(@last, @current)
+        @filter = ResultFilters::PriceChange.new
       end
 
       it 'should yield once' do
-        expect { |b| @filter.filter &b }.to yield_control.once
+        expect { |b| @filter.filter @last, @current, &b }.to yield_control.once
       end
 
       it 'should yield the changed_item' do
-        @filter.filter do |l,c|
+        @filter.filter @last, @current do |l,c|
           c.should == @changed_item
           l.should == @last.scraper_results.last
         end
@@ -33,7 +33,7 @@ describe ResultFilters::PriceChange do
         @changed_item = @last.scraper_results.last
         @changed_item.was_price = @changed_item.now_price
         @changed_item.now_price = @changed_item.now_price - 1.00
-        @filter = ResultFilters::PriceChange.new(@last, @current)
+        @filter = ResultFilters::PriceChange.new
       end
     end
 
@@ -42,15 +42,15 @@ describe ResultFilters::PriceChange do
         @current = create_run_copy(@last)
         @changed_item = @current.scraper_results.last
         @changed_item.now_price = @changed_item.now_price-1.00
-        @filter = ResultFilters::PriceChange.new(@last, @current)
+        @filter = ResultFilters::PriceChange.new
       end
 
       it 'should yield once' do
-        expect { |b| @filter.filter &b }.to yield_control.once
+        expect { |b| @filter.filter @last, @current, &b }.to yield_control.once
       end
 
       it 'should yield the previous and current' do
-        @filter.filter do |l,c|
+        @filter.filter @last, @current do |l,c|
           l.should == @last.scraper_results.last
           c.should == @changed_item
           l.now_price.should_not == @changed_item.now_price
@@ -61,11 +61,11 @@ describe ResultFilters::PriceChange do
     describe 'when nothing changes' do
       before do
         @current = create_run_copy(@last)
-        @filter = ResultFilters::PriceChange.new(@last, @current)
+        @filter = ResultFilters::PriceChange.new
       end
 
       it 'should not yield anything' do
-        expect { |b| @filter.filter &b }.to_not yield_control
+        expect { |b| @filter.filter @last, @current, &b }.to_not yield_control
       end
     end
   end
