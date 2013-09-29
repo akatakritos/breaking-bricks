@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Scraper do
   describe 'parse' do
     before do
-      scraper = Scraper.new(Nokogiri::HTML(open('spec/files/retiring-soon.html')))
+      scraper = Scraper.new(Nokogiri::HTML(open('spec/files/retiring-soon.html')), "example.com")
       @products = scraper.get_retiring_products
     end
 
@@ -17,6 +17,7 @@ describe Scraper do
         product[:now_price].should be_kind_of(BigDecimal)
         product[:availability].should_not be_blank
         product[:availability_text].should_not be_blank
+        expect(product[:link]).to match /http:\/\/.*$/
       end
     end
 

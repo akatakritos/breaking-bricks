@@ -5,7 +5,7 @@ module Tweets
     end
 
     def to_s
-      "#{@current.item.name} (#{@current.item.code}) is retiring! #{@current.item.page} #LEGO"
+      "#{@current.item.name} (#{@current.item.code}) is retiring! #{@current.item.link} #LEGO"
     end
   end
 end

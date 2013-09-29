@@ -2,9 +2,10 @@ require 'open-uri'
 class Scraper
 
   attr_reader :html
-  def initialize(page)
+  def initialize(page, domain)
     @page = page
     @html = page.to_s
+    @domain = domain
   end
   
   def get_retiring_products
@@ -32,7 +33,7 @@ class Scraper
         results.push({ 
           :name => title_tag.text.strip,
           :code => product_code_tag.text.strip.to_i,
-          :link => title_tag.attr('href'),
+          :link => "http://#{@domain}" + title_tag.attr('href'),
           :image => img_tag.attr('src'),
           :was_price => was_price_tag ? was_price_tag.text.match(/\d+\.\d+/).to_s.to_d : nil,
           :now_price => now_price_tag.text.match(/\d+\.\d+/).to_s.to_d,
