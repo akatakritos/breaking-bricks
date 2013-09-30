@@ -1,5 +1,5 @@
 module ResultFilters
-  class AvailabilityChange < BaseFilter
+  class AvailabilityChangeFilter < BaseFilter
     def filter(last, current)
       current.scraper_results.each do |current_result|
         last_result = last.get_result_by_item(current_result.item)

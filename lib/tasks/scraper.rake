@@ -16,7 +16,7 @@ namespace :scraper do
       tweeter.send_tweet(Tweets::PriceChangeTweet.new(old, new))
     end
 
-    pipeline.add_filter(ResultFilters::AvailabilityChange.new) do |old, new|
+    pipeline.add_filter(ResultFilters::AvailabilityChangeFilter.new) do |old, new|
       tweeter.send_tweet(Tweets::AvailabilityChangeTweet.new(old,new))
     end
 
