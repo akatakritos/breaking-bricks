@@ -16,3 +16,4 @@
 
 # ignore twitter.yml so its not in source control
 config/twitter.yml
+config/database.yml
