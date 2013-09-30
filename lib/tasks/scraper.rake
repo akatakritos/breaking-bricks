@@ -20,7 +20,7 @@ namespace :scraper do
       tweeter.send_tweet(Tweets::AvailabilityChangeTweet.new(old,new))
     end
 
-    pipeline.add_filter(ResultFilters::Retired.new) do |old|
+    pipeline.add_filter(ResultFilters::RetiredFilter.new) do |old|
       tweeter.send_tweet(Tweets::RetiredTweet.new(old))
     end
 
