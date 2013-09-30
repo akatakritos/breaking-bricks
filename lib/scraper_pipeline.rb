@@ -6,7 +6,7 @@ class ScraperPipeline
   end
 
   def process
-    products = @scraper.get_retiring_products
+    products = @scraper.get_products
     current = ScraperRun.from_results(@scraper.html, products)
     current.save
 

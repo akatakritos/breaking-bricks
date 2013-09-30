@@ -7,7 +7,7 @@ describe SaleScraper do
 
     let(:products) do
       scraper = SaleScraper.new(Nokogiri::HTML(open('spec/files/sales.html')), "example.com")
-      scraper.get_retiring_products
+      scraper.get_products
     end
       
 

@@ -4,7 +4,7 @@ describe Scraper do
   describe 'parse' do
     before do
       scraper = Scraper.new(Nokogiri::HTML(open('spec/files/retiring-soon.html')), "example.com")
-      @products = scraper.get_retiring_products
+      @products = scraper.get_products
     end
 
     it 'should load something' do
@@ -12,12 +12,12 @@ describe Scraper do
       @products.each do |product|
         product[:name].should_not be_blank
         product[:code].should be_kind_of(Integer)
-        product[:link].should_not be_blank
+        product[:page].should_not be_blank
         product[:image].should_not be_blank
         product[:now_price].should be_kind_of(BigDecimal)
         product[:availability].should_not be_blank
         product[:availability_text].should_not be_blank
-        expect(product[:link]).to match /http:\/\/.*$/
+        expect(product[:page]).to match /http:\/\/.*$/
       end
     end
 

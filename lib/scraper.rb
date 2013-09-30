@@ -8,7 +8,7 @@ class Scraper
     @domain = domain
   end
   
-  def get_retiring_products
+  def get_products
     results = []
 
     @page.search('#product-results li').each do |result|
