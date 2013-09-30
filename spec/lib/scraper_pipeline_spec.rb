@@ -10,11 +10,15 @@ describe ScraperPipeline do
         run1 = FactoryGirl.create(:scraper_run)
         run2 = FactoryGirl.create(:scraper_run)
         run2.stub(:previous).and_return run1
+        run_type = "test"
 
-        ScraperRun.should_receive(:from_results).with(scraper.html, scraper.get_products).and_return(run2)
+        ScraperRun.should_receive(:from_results).with(
+                                          scraper.html,
+                                          scraper.get_products,
+                                          run_type).and_return(run2)
         ScraperRun.stub(:from_results).and_return run2
         
-        pipeline = ScraperPipeline.new(scraper)
+        pipeline = ScraperPipeline.new(scraper, run_type)
         filter1 = double()
         block1 = Proc.new { |l,c| }
         filter2 = double()

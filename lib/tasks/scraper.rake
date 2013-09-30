@@ -3,13 +3,12 @@ namespace :scraper do
   task :run => :environment do
     fetcher = Fetcher.new
     scraper = Scraper.new fetcher.retiring_products_page, fetcher.domain
-    pipeline = ScraperPipeline.new(scraper)
+    pipeline = ScraperPipeline.new(scraper, "retiring")
 
     tweeter = Tweeter.new
 
     pipeline.add_filter(ResultFilters::NewlyRetiringFilter.new) do |result|
-      tweet = Tweets::NewlyRetiringTweet.new(result)
-      tweeter.send_tweet(tweet)
+      tweeter.send_tweet(Tweets::NewlyRetiringTweet.new(result))
     end
 
     pipeline.add_filter(ResultFilters::PriceChangeFilter.new) do |old, new|
