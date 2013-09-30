@@ -1,0 +1,3 @@
+class SaleScraper < Scraper
+
+end
