@@ -24,12 +24,12 @@ ActiveRecord::Schema.define(:version => 20130923123114) do
   create_table "scraper_results", :force => true do |t|
     t.integer  "scraper_run_id"
     t.integer  "item_id"
-    t.decimal  "was_price"
-    t.decimal  "now_price"
+    t.decimal  "was_price",         :precision => 10, :scale => 0
+    t.decimal  "now_price",         :precision => 10, :scale => 0
     t.string   "availability"
     t.string   "availability_text"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "scraper_runs", :force => true do |t|
