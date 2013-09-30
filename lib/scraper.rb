@@ -33,7 +33,7 @@ class Scraper
         results.push({ 
           :name => title_tag.text.strip,
           :code => product_code_tag.text.strip.to_i,
-          :link => "http://#{@domain}" + title_tag.attr('href'),
+          :page => "http://#{@domain}" + title_tag.attr('href'),
           :image => img_tag.attr('src'),
           :was_price => was_price_tag ? was_price_tag.text.match(/\d+\.\d+/).to_s.to_d : nil,
           :now_price => now_price_tag.text.match(/\d+\.\d+/).to_s.to_d,
