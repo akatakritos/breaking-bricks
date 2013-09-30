@@ -7,7 +7,7 @@ namespace :scraper do
 
     tweeter = Tweeter.new
 
-    pipeline.add_filter(ResultFilters::NewlyRetiring.new) do |result|
+    pipeline.add_filter(ResultFilters::NewlyRetiringFilter.new) do |result|
       tweet = Tweets::NewlyRetiringTweet.new(result)
       tweeter.send_tweet(tweet)
     end
