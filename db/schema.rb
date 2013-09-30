@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130930003449) do
+ActiveRecord::Schema.define(:version => 20130930155036) do
 
   create_table "items", :force => true do |t|
     t.integer  "code"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20130930003449) do
     t.text     "html"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "run_type"
   end
 
 end
