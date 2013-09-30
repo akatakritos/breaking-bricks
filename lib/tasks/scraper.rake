@@ -12,7 +12,7 @@ namespace :scraper do
       tweeter.send_tweet(tweet)
     end
 
-    pipeline.add_filter(ResultFilters::PriceChange.new) do |old, new|
+    pipeline.add_filter(ResultFilters::PriceChangeFilter.new) do |old, new|
       tweeter.send_tweet(Tweets::PriceChangeTweet.new(old, new))
     end
 
