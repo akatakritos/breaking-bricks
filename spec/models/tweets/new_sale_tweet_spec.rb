@@ -8,6 +8,6 @@ describe Tweets::NewSaleTweet  do
   it { should include(result.item.name) }
   it { should include(result.item.page) }
   it { should include(result.item.code.to_s) }
-  it { should include(result.now_price) }
+  it { should include(result.now_price.to_s) }
 end
 
