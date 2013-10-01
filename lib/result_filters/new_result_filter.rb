@@ -1,5 +1,5 @@
 module ResultFilters
-  class NewlyRetiring < BaseFilter
+  class NewResultFilter < BaseFilter
     def filter(last, current)
       current.scraper_results.each do |current_result|
         yield current_result unless last.has_item?(current_result.item)

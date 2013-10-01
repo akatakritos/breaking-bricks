@@ -18,11 +18,38 @@ describe ScraperRun do
   end
 
   describe '#previous' do
-    it 'returns the previous run' do
-      prev = FactoryGirl.create(:scraper_run)
-      curr = FactoryGirl.create(:scraper_run)
-      curr.previous.should == prev
+    context 'of the same run_type' do
+      it 'returns the previous run' do
+        prev = FactoryGirl.create(:scraper_run)
+        curr = FactoryGirl.create(:scraper_run)
+        curr.previous.should == prev
+      end
     end
+
+    context 'when there are multiple types in the db' do
+      it 'returns the previous with the same type' do
+        prevA = FactoryGirl.create(:scraper_run, :run_type => "A")
+        prevB = FactoryGirl.create(:scraper_run, :run_type => "B")
+        curr  = FactoryGirl.create(:scraper_run, :run_type => "A")
+        expect(curr.previous).to eq prevA
+      end
+    end
+  end
+
+  describe '#from_results' do
+     context 'no type passed' do
+       it 'has a retiring type' do
+         run = ScraperRun.from_results("", [])
+         expect(run.run_type).to eq "retiring"
+       end
+     end
+
+     context "with a passed type" do
+       it 'has the type' do
+         run = ScraperRun.from_results("", [], "a-new-type")
+         expect(run.run_type).to eq "a-new-type"
+       end
+     end
   end
 end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ResultFilters::NewlyRetiringFilter do
+describe ResultFilters::NewSaleFilter do
   describe '#filter' do
     before do
       @last = FactoryGirl.create(:scraper_run)
@@ -11,7 +11,7 @@ describe ResultFilters::NewlyRetiringFilter do
         @current = create_run_copy(@last)
         @new_result = FactoryGirl.create(:scraper_result)
         @current.scraper_results << @new_result
-        @filter = ResultFilters::NewlyRetiringFilter.new
+        @filter = ResultFilters::NewSaleFilter.new
       end
 
       it 'should yield once' do
@@ -29,7 +29,7 @@ describe ResultFilters::NewlyRetiringFilter do
       before do
         @current = create_run_copy(@last)
 
-        @filter = ResultFilters::NewlyRetiringFilter.new
+        @filter = ResultFilters::NewSaleFilter.new
       end
 
       it 'should not yeld' do

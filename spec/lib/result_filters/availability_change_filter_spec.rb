@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ResultFilters::AvailabilityChange do
+describe ResultFilters::AvailabilityChangeFilter do
 
   describe '#filter' do
     before do
@@ -9,7 +9,7 @@ describe ResultFilters::AvailabilityChange do
     describe 'no change in availability' do
       before do
         @current = create_run_copy(@last)
-        @filter = ResultFilters::AvailabilityChange.new
+        @filter = ResultFilters::AvailabilityChangeFilter.new
       end
 
       it 'should not yield' do
@@ -22,7 +22,7 @@ describe ResultFilters::AvailabilityChange do
         @current = create_run_copy(@last)
         @changed_result = @current.scraper_results.last
         @changed_result.availability = "DIFFERENT"
-        @filter = ResultFilters::AvailabilityChange.new
+        @filter = ResultFilters::AvailabilityChangeFilter.new
       end
 
       it 'should yield once' do
@@ -43,7 +43,7 @@ describe ResultFilters::AvailabilityChange do
         @current = create_run_copy(@last)
         @changed_result = @current.scraper_results.last
         @changed_result.availability_text = "DIFFERENT"
-        @filter = ResultFilters::AvailabilityChange.new
+        @filter = ResultFilters::AvailabilityChangeFilter.new
       end
 
       it 'should yield once' do

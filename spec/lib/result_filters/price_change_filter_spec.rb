@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ResultFilters::PriceChange do
+describe ResultFilters::PriceChangeFilter do
   describe '#filter' do
     before do
       @last = FactoryGirl.create(:scraper_run)
@@ -12,7 +12,7 @@ describe ResultFilters::PriceChange do
         @changed_item = @current.scraper_results.last
         @changed_item.was_price = @changed_item.now_price
         @changed_item.now_price = @changed_item.now_price - 1.00
-        @filter = ResultFilters::PriceChange.new
+        @filter = ResultFilters::PriceChangeFilter.new
       end
 
       it 'should yield once' do
@@ -33,7 +33,7 @@ describe ResultFilters::PriceChange do
         @changed_item = @last.scraper_results.last
         @changed_item.was_price = @changed_item.now_price
         @changed_item.now_price = @changed_item.now_price - 1.00
-        @filter = ResultFilters::PriceChange.new
+        @filter = ResultFilters::PriceChangeFilter.new
       end
     end
 
@@ -42,7 +42,7 @@ describe ResultFilters::PriceChange do
         @current = create_run_copy(@last)
         @changed_item = @current.scraper_results.last
         @changed_item.now_price = @changed_item.now_price-1.00
-        @filter = ResultFilters::PriceChange.new
+        @filter = ResultFilters::PriceChangeFilter.new
       end
 
       it 'should yield once' do
@@ -61,7 +61,7 @@ describe ResultFilters::PriceChange do
     describe 'when nothing changes' do
       before do
         @current = create_run_copy(@last)
-        @filter = ResultFilters::PriceChange.new
+        @filter = ResultFilters::PriceChangeFilter.new
       end
 
       it 'should not yield anything' do

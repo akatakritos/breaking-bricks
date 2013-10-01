@@ -40,9 +40,14 @@ FactoryGirl.define do
 
   factory :scraper_run do
     sequence(:html) { |n| "<html>#{n}</html>" }
+    run_type "retiring"
 
     after_create do |run|
       FactoryGirl.create_list(:scraper_result, 3, :scraper_run => run)
+    end
+
+    factory :sale_run do
+      run_type "sale"
     end
   end
 end

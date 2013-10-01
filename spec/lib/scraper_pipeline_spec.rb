@@ -5,16 +5,20 @@ describe ScraperPipeline do
     it 'calls filter on all the filters' do
     
         scraper = double("Scraper")
-        scraper.stub(:get_retiring_products).and_return(nil)
+        scraper.stub(:get_products).and_return(nil)
         scraper.stub(:html).and_return(nil)
         run1 = FactoryGirl.create(:scraper_run)
         run2 = FactoryGirl.create(:scraper_run)
         run2.stub(:previous).and_return run1
+        run_type = "test"
 
-        ScraperRun.should_receive(:from_results).with(scraper.html, scraper.get_retiring_products).and_return(run2)
+        ScraperRun.should_receive(:from_results).with(
+                                          scraper.html,
+                                          scraper.get_products,
+                                          run_type).and_return(run2)
         ScraperRun.stub(:from_results).and_return run2
         
-        pipeline = ScraperPipeline.new(scraper)
+        pipeline = ScraperPipeline.new(scraper, run_type)
         filter1 = double()
         block1 = Proc.new { |l,c| }
         filter2 = double()

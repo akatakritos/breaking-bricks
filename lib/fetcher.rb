@@ -1,4 +1,4 @@
-class Fetcher
+class Fetcher < FetcherBase
   def retiring_products_page
     agent = Mechanize.new
     page = agent.get("http://#{domain}/en-US/catalog/productListing.jsp")
@@ -8,7 +8,4 @@ class Fetcher
     page.parser #nokogiri document
   end
 
-  def domain
-    "shop.lego.com"
-  end
 end

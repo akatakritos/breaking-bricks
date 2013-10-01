@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ResultFilters::RetiredFilter do
+describe ResultFilters::EndSaleFilter do
   describe '#filter' do
     before do
       @last = FactoryGirl.create(:scraper_run)
@@ -8,7 +8,7 @@ describe ResultFilters::RetiredFilter do
     describe 'when nothing changes' do
       before do
         @current = create_run_copy(@last)
-        @filter = ResultFilters::RetiredFilter.new
+        @filter = ResultFilters::EndSaleFilter.new
       end
 
       it 'should not yield anything' do
@@ -22,7 +22,7 @@ describe ResultFilters::RetiredFilter do
         @removed_item = @current.scraper_results.last
         @removed_item.destroy
         @current.scraper_results.reload
-        @filter = ResultFilters::RetiredFilter.new
+        @filter = ResultFilters::EndSaleFilter.new
       end
 
       it 'should yield once' do
