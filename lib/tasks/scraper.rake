@@ -52,4 +52,10 @@ namespace :scraper do
 
     pipeline.process
   end
+
+  desc 'Runs all scrapers'
+  task :all => :environment do
+    Rake::Task["scraper:retiring"].execute
+    Rake::Task["scraper:sale"].execute
+  end
 end
